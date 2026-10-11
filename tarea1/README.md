@@ -153,17 +153,19 @@ Porque MySQL era GPL, y la GPL da a cualquiera el derecho de copiar, modificar y
 
 ### Diferencias entre los dos contenedores
 
+### Diferencias entre los dos contenedores
+
 | Aspecto | Qué decía (17) | Qué dice (18) | Por qué cambió |
 |---|---|---|---|
-| Nombre del archivo | `docker-compose.yml` | `compose.yaml` |  |
-| Primera línea | `version: '3.8'` | No hay | |
-| Imagen | `postgres:17` | `FROM postgres:18.6` | |
-| Datos | `./data:/var/lib/postgresql/data` | `datos_db:/var/lib/postgresql` | |
-| Contraseña | escrita: `postgres` | `${POSTGRES_PASSWORD:-...}` | |
-| Puerto | `"5432:5432"` | `"127.0.0.1:5434:5432"` | |
-| ¿Sabe si está lista? | No | `healthcheck` | |
-| Interfaz web | No | Adminer | |
-| Carpeta del proyecto dentro | No, sólo `data/` | `./:/trabajo` | |
+| Nombre del archivo | `docker-compose.yml` | `compose.yaml` | Es el nombre que Docker recomienda ahora [5]. |
+| Primera línea | `version: '3.8'` | No hay | Ya es obsoleta; Compose la ignora [5]. |
+| Imagen | `postgres:17` | `FROM postgres:18.6` | Versión exacta, construida desde el Dockerfile. |
+| Datos | `./data:/var/lib/postgresql/data` | `datos_db:/var/lib/postgresql` | Volumen de Docker; la 18 cambió la ruta de los datos [6]. |
+| Contraseña | escrita: `postgres` | `${POSTGRES_PASSWORD:-...}` | Ya no queda escrita en el repositorio. |
+| Puerto | `"5432:5432"` | `"127.0.0.1:5434:5432"` | Solo acceso local y sin chocar con el 5432. |
+| ¿Sabe si está lista? | No | `healthcheck` | Avisa cuando la base ya acepta conexiones. |
+| Interfaz web | No | Adminer | Ver las tablas desde el navegador. |
+| Carpeta del proyecto dentro | No, sólo `data/` | `./:/trabajo` | Para ejecutar los scripts `.sql` del proyecto. |
 
 ### ¿Se usaba el Dockerfile viejo?
 
